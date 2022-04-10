@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    stream:
+      binders:
+        kafka-plain:
+          type: kafka
+          environment.spring.cloud.stream.kafka.binder:
+            brokers: localhost:9093
+            autoAddPartitions: true
+            autoCreateTopics: true
+            configuration:
+              security.protocol: SASL_SSL
+              ssl.enabled.protocols: TLSv1.2
+              ssl.truststore.type: JKS
+              ssl.truststore.location: /Users/pratya.yeekhaday/Desktop/Workshop/SpringBoot-Cloud-Kafka-SASL_SSL/config/broker.truststore.jks
+              ssl.truststore.password: datahub
+              sasl.mechanism: PLAIN
+              sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"test\" password=\"testtest\";"
+      bindings:
+        customerConsumer:
+          binder: kafka-plain
+          group: Customer.Group
+          destination: topic.customer
+        customerProducer:
+          binder: kafka-plain
+          destination: topic.customer
+
